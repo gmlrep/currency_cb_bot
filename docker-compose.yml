@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+
+  redis:
+    container_name: redis
+    image: 'redis:latest'
+    restart: 'always'
+    environment:
+      - 'REDIS_HOST=redis'
+      - 'REDIS_PORT=${REDIS_PORT}'
+    ports:
+      - '${REDIS_PORT}:6379'
+    command:
+      - 'redis-server'
+    healthcheck:
+      test: [ "CMD", "redis-cli","ping" ]
+
+  bot:
+    container_name: currency_bot
+    build:
+      context: .
+    env_file: [.env]
+    command: ['python3', '-m', 'bot']
+    depends_on:
+      - redis
