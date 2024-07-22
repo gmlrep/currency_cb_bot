@@ -1,7 +1,13 @@
 # Чат-бот для отображения актуального курса валют с ЦБ РФ
 
 
-### Запуск через docker-compose:
+### Запуск через Makefile:
 ```bash
-docker-compose up -d
+make up
+```
+
+### Запуск через Docker-compose:
+```bash
+docker-compose -f ./redis-client/docker-compose.yml up -d
+docker-compose -f ./bot/docker-compose.yml up -d
 ```

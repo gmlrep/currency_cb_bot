@@ -8,19 +8,24 @@ services:
     restart: 'always'
     environment:
       - 'REDIS_HOST=redis'
-      - 'REDIS_PORT=${REDIS_PORT}'
+      - 'REDIS_PORT=6379'
     ports:
-      - '${REDIS_PORT}:6379'
+      - '6379:6379'
     command:
       - 'redis-server'
     healthcheck:
       test: [ "CMD", "redis-cli","ping" ]
 
-  bot:
+  app:
     container_name: currency_bot
     build:
       context: .
-    env_file: [.env]
-    command: ['python3', '-m', 'bot']
+    env_file: [../.env]
+    command: ['python3', '-m', 'app']
     depends_on:
       - redis
+
+networks:
+  default:
+    external:
+      name: 'bot-redis-network'

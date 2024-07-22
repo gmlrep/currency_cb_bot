@@ -11,4 +11,4 @@ FROM python:3.11-slim-bullseye
 COPY --from=compile /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 WORKDIR /app
-COPY bot /app/bot
+COPY app /app/app

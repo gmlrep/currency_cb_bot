@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message
 
-from bot.redis_client import get_all_currencies, get_currency
+from app.redis_client import get_currency, get_all_currencies
 
 router = Router()
 
@@ -11,10 +11,9 @@ router = Router()
 async def exchange_command(message: Message, command: CommandObject):
     cmd_args = command.args.split(' ')
     try:
-        data = await get_currency(valute_code=cmd_args[0])
-        cur_value = float(cmd_args[2]) * float(data['value'])
-        print(cur_value)
-        await message.answer(text=f"{cmd_args[2]} {cmd_args[0]} стоит {round(cur_value, 3)} RUB")
+        currency = await get_currency(valute_from=cmd_args[0], valute_to=cmd_args[1])
+        cur_value = float(cmd_args[2]) * currency
+        await message.answer(text=f"{cmd_args[2]} {cmd_args[0].upper()} стоит {round(cur_value, 3)} {cmd_args[1].upper()}")
     except ValueError:
         await message.answer(text='Неверный формат аргументов команды.\nПример: /exchange AUD RUB 10')
 

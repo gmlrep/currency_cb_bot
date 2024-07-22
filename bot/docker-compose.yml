@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+
+  bot:
+    container_name: telegram_bot
+    build:
+      context: .
+    env_file: [../.env]
+    command: ['python3', '-m', 'app']
+
+networks:
+  default:
+    external:
+      name: bot-redis-network
