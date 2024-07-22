@@ -2,4 +2,4 @@ aiogram~=3.10.0
 python-dotenv~=1.0.1
 pydantic~=2.8.2
 pydantic-settings~=2.3.4
-redis~=5.0.4
+redis~=5.0.7
